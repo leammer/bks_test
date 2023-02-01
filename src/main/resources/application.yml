@@ -1,0 +1,38 @@
+server:
+  port: 8090
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: DEBUG
+        type:
+          descriptor:
+            sql:
+              BasicBinder: TRACE
+    com:
+      bks: info
+
+spring:
+  mvc:
+    hiddenmethod:
+      filter:
+        enabled: true
+  datasource:
+    url: jdbc:postgresql://localhost:5432/test
+    username: manual
+    password: password
+  jpa:
+    properties:
+      hibernate:
+        jdbc:
+          lob:
+          non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        ddl-auto: update
+        check_nullability: true
+    show-sql: true
+
+springdoc:
+  swagger-ui:
+    path: /swagger.html
