@@ -2,28 +2,29 @@ package com.bks.test.service;
 
 import com.bks.test.dto.EmailDataDto;
 import com.bks.test.dto.PhoneDataDto;
-import com.bks.test.dto.UserDto;
+import com.bks.test.dto.UserDataDto;
+import com.bks.test.dto.UserFullDataDto;
 
 import org.springframework.data.domain.Page;
 
 import java.lang.Long;
 
 public interface UserService {
-	Page<UserDto> getAll(String filter, Integer number, Integer size, String sortValue);
+	Page<UserFullDataDto> getAll(String filter, Integer number, Integer size, String sortValue);
 
-	UserDto getUserById(Long id);
+	UserFullDataDto getUserById(Long id);
 
-	UserDto updateUser(Long id, UserDto user);
+	UserFullDataDto updateUser(Long userId, UserDataDto user);
 
-	UserDto deleteEmailData(Long userId, EmailDataDto email);
+	void deleteEmailData(Long userId, EmailDataDto email);
 
-	UserDto updateEmailData(Long userId, EmailDataDto email);
+	EmailDataDto updateEmailData(Long userId, EmailDataDto email);
 
-	UserDto addEmailData(Long userId, EmailDataDto email);
+	EmailDataDto addEmailData(Long userId, EmailDataDto email);
 
-	UserDto deletePhoneData(Long userId, PhoneDataDto phone);
+	void deletePhoneData(Long userId, PhoneDataDto phone);
 
-	UserDto updatePhoneData(Long userId, PhoneDataDto phone);
+	PhoneDataDto updatePhoneData(Long userId, PhoneDataDto phone);
 
-	UserDto addPhoneData(Long userId, PhoneDataDto phone);
+	PhoneDataDto addPhoneData(Long userId, PhoneDataDto phone);
 }

@@ -3,8 +3,12 @@ package com.bks.test.dto;
 import java.util.Set;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Past;
 import javax.validation.constraints.Size;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +19,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDto {
+public class UserFullDataDto {
 
 	private Long id;
 
@@ -23,7 +27,9 @@ public class UserDto {
 	@Size(max = 500)
 	private String name;
 
-	@Pattern(regexp = "^([0-2][0-9]|(3)[0-1])(\\.)(((0)[0-9])|((1)[0-2]))(\\.)\\d{4}$")
+	@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+	@JsonFormat(pattern = "dd.MM.yyyy")
+	@Past(message = "The date of birth must be in the past.")
 	private String dateOfBirth;
 
 	@Size(min = 8, max = 500)

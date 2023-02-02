@@ -1,6 +1,6 @@
 package com.bks.test.model;
 
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -31,7 +31,7 @@ public class User {
 	@Size(max = 500)
 	private String name;
 
-	private Date dateOfBirth;
+	private LocalDate dateOfBirth;
 
 	@Size(min = 8, max = 500)
 	private String password;

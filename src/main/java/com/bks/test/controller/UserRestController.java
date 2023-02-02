@@ -23,7 +23,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bks.test.dto.EmailDataDto;
 import com.bks.test.dto.PhoneDataDto;
-import com.bks.test.dto.UserDto;
+import com.bks.test.dto.UserDataDto;
+import com.bks.test.dto.UserFullDataDto;
 import com.bks.test.service.UserService;
 
 @RestController
@@ -33,7 +34,7 @@ public class UserRestController {
 	private UserService service;
 
 	@GetMapping
-	public Page<UserDto> getAllUsers(@RequestParam Optional<String> filter,
+	public Page<UserFullDataDto> getAllUsers(@RequestParam Optional<String> filter,
 			@RequestParam(defaultValue = "0") Integer number, @RequestParam(defaultValue = "20") Integer size,
 			@RequestParam Optional<String> sort) {
 		String filterValue = filter.orElse("");
@@ -42,43 +43,43 @@ public class UserRestController {
 	}
 
 	@GetMapping(BY_ID)
-	public UserDto getUserById(@PathVariable Long id) {
+	public UserFullDataDto getUserById(@PathVariable Long id) {
 		return service.getUserById(id);
 	}
 
 	@PutMapping(BY_ID)
-	public UserDto updateUserData(@PathVariable Long userId, @RequestBody @Valid UserDto user) {
-		return service.updateUser(userId, user);
+	public UserFullDataDto updateUserData(@PathVariable Long id, @RequestBody @Valid UserDataDto user) {
+		return service.updateUser(id, user);
 	}
 
 	@DeleteMapping(BY_ID + EMAIL_DATA)
-	public UserDto deleteEmailData(@PathVariable Long userId, @RequestBody @Valid EmailDataDto email) {
-		return service.deleteEmailData(userId, email);
+	public void deleteEmailData(@PathVariable Long id, @RequestBody @Valid EmailDataDto email) {
+		service.deleteEmailData(id, email);
 	}
 
 	@PutMapping(BY_ID + EMAIL_DATA)
-	public UserDto updateEmailData(@PathVariable Long userId, @RequestBody @Valid EmailDataDto email) {
-		return service.updateEmailData(userId, email);
+	public EmailDataDto updateEmailData(@PathVariable Long id, @RequestBody @Valid EmailDataDto email) {
+		return service.updateEmailData(id, email);
 	}
 
 	@PostMapping(BY_ID + EMAIL_DATA)
-	public UserDto addEmailData(@PathVariable Long userId, @RequestBody @Valid EmailDataDto email) {
-		return service.addEmailData(userId, email);
+	public EmailDataDto addEmailData(@PathVariable Long id, @RequestBody @Valid EmailDataDto email) {
+		return service.addEmailData(id, email);
 	}
 
 	@DeleteMapping(BY_ID + PHONE_DATA)
-	public UserDto deletePhoneData(@PathVariable Long userId, @RequestBody @Valid PhoneDataDto phone) {
-		return service.deletePhoneData(userId, phone);
+	public void deletePhoneData(@PathVariable Long id, @RequestBody @Valid PhoneDataDto phone) {
+		service.deletePhoneData(id, phone);
 	}
 
 	@PutMapping(BY_ID + PHONE_DATA)
-	public UserDto updatePhoneData(@PathVariable Long userId, @RequestBody @Valid PhoneDataDto phone) {
-		return service.updatePhoneData(userId, phone);
+	public PhoneDataDto updatePhoneData(@PathVariable Long id, @RequestBody @Valid PhoneDataDto phone) {
+		return service.updatePhoneData(id, phone);
 	}
 
 	@PostMapping(BY_ID + PHONE_DATA)
-	public UserDto addPhoneData(@PathVariable Long userId, @RequestBody @Valid PhoneDataDto phone) {
-		return service.addPhoneData(userId, phone);
+	public PhoneDataDto addPhoneData(@PathVariable Long id, @RequestBody @Valid PhoneDataDto phone) {
+		return service.addPhoneData(id, phone);
 	}
 
 }
