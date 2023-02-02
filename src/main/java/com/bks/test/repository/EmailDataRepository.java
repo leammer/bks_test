@@ -5,13 +5,13 @@ import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.bks.test.model.PhoneData;
+import com.bks.test.model.EmailData;
 
 @Repository
-public interface PhoneDataRepository extends JpaRepository<PhoneData, Long> {
+public interface EmailDataRepository extends JpaRepository<EmailData, Long> {
 	long countByUserId(Long userId);
 
-	boolean existsByPhone(String phone);
+	boolean existsByEmail(String email);
 
-	Optional<PhoneData> deleteByPhone(String phone);
+	Optional<EmailData> deleteByEmail(String email);
 }

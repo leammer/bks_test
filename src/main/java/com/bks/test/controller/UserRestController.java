@@ -59,12 +59,12 @@ public class UserRestController {
 
 	@PutMapping(BY_ID + EMAIL_DATA)
 	public EmailDataDto updateEmailData(@PathVariable Long id, @RequestBody @Valid EmailDataDto email) {
-		return service.updateEmailData(id, email);
+		return service.saveEmailData(id, email);
 	}
 
 	@PostMapping(BY_ID + EMAIL_DATA)
 	public EmailDataDto addEmailData(@PathVariable Long id, @RequestBody @Valid EmailDataDto email) {
-		return service.addEmailData(id, email);
+		return service.saveEmailData(id, email);
 	}
 
 	@DeleteMapping(BY_ID + PHONE_DATA)
@@ -74,12 +74,11 @@ public class UserRestController {
 
 	@PutMapping(BY_ID + PHONE_DATA)
 	public PhoneDataDto updatePhoneData(@PathVariable Long id, @RequestBody @Valid PhoneDataDto phone) {
-		return service.updatePhoneData(id, phone);
+		return service.savePhoneData(id, phone);
 	}
 
 	@PostMapping(BY_ID + PHONE_DATA)
 	public PhoneDataDto addPhoneData(@PathVariable Long id, @RequestBody @Valid PhoneDataDto phone) {
-		return service.addPhoneData(id, phone);
+		return service.savePhoneData(id, phone);
 	}
-
 }

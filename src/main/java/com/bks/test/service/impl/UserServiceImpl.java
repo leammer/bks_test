@@ -9,9 +9,11 @@ import com.bks.test.dto.EmailDataDto;
 import com.bks.test.dto.PhoneDataDto;
 import com.bks.test.dto.UserDataDto;
 import com.bks.test.dto.UserFullDataDto;
+import com.bks.test.model.EmailData;
 import com.bks.test.model.PhoneData;
 import com.bks.test.model.QUser;
 import com.bks.test.model.User;
+import com.bks.test.repository.EmailDataRepository;
 import com.bks.test.repository.PhoneDataRepository;
 import com.bks.test.repository.UserRepository;
 import com.bks.test.service.UserService;
@@ -30,6 +32,9 @@ public class UserServiceImpl implements UserService {
 
 	@Autowired
 	private PhoneDataRepository phoneRepository;
+	
+	@Autowired
+	private EmailDataRepository emailRepository;
 
 	@Autowired
 	private MappingUtils mappingUtils;
@@ -61,19 +66,23 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public void deleteEmailData(Long userId, EmailDataDto email) {
-		// TODO
+		if (this.emailRepository.countByUserId(userId) <= 1) {
+			throw new RuntimeException("User must have at least one email");
+		}
+		this.emailRepository.deleteById(email.getId());
 	}
 
 	@Override
-	public EmailDataDto updateEmailData(Long userId, EmailDataDto email) {
-		// TODO
-		return null;
-	}
+	public EmailDataDto saveEmailData(Long userId, EmailDataDto email) {
+		if (this.emailRepository.existsByEmail(email.getEmail())) {
+			throw new RuntimeException("Email is already used");
+		}
 
-	@Override
-	public EmailDataDto addEmailData(Long userId, EmailDataDto email) {
-		// TODO
-		return null;
+		EmailData emailEntity = this.mappingUtils.mapToEntity(email);
+		User userEntity = this.userRepository.findById(userId).get();
+		emailEntity.setUser(userEntity);
+
+		return this.mappingUtils.mapToDto(this.emailRepository.save(emailEntity));
 	}
 
 	@Override
@@ -85,20 +94,16 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public PhoneDataDto updatePhoneData(Long userId, PhoneDataDto phone) {
+	public PhoneDataDto savePhoneData(Long userId, PhoneDataDto phone) {
 		if (this.phoneRepository.existsByPhone(phone.getPhone())) {
 			throw new RuntimeException("Phone number is already used");
 		}
-		PhoneData entity = this.mappingUtils.mapToEntity(phone);
-		return this.mappingUtils.mapToDto(this.phoneRepository.saveAndFlush(entity));
-	}
 
-	@Override
-	public PhoneDataDto addPhoneData(Long userId, PhoneDataDto phone) {
-		if (this.phoneRepository.existsByPhone(phone.getPhone())) {
-			throw new RuntimeException("Phone number is already used");
-		}
-		return null;
+		PhoneData phoneEntity = this.mappingUtils.mapToEntity(phone);
+		User userEntity = this.userRepository.findById(userId).get();
+		phoneEntity.setUser(userEntity);
+
+		return this.mappingUtils.mapToDto(this.phoneRepository.save(phoneEntity));
 	}
 
 	@Override
@@ -106,6 +111,6 @@ public class UserServiceImpl implements UserService {
 		User entity = this.userRepository.findById(userId).get();
 		entity.setName(user.getName());
 		entity.setDateOfBirth(user.getDateOfBirth());
-		return this.mappingUtils.mapToDto(this.userRepository.saveAndFlush(entity));
+		return this.mappingUtils.mapToDto(this.userRepository.save(entity));
 	}
 }

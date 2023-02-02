@@ -18,13 +18,9 @@ public interface UserService {
 
 	void deleteEmailData(Long userId, EmailDataDto email);
 
-	EmailDataDto updateEmailData(Long userId, EmailDataDto email);
-
-	EmailDataDto addEmailData(Long userId, EmailDataDto email);
+	EmailDataDto saveEmailData(Long userId, EmailDataDto email);
 
 	void deletePhoneData(Long userId, PhoneDataDto phone);
 
-	PhoneDataDto updatePhoneData(Long userId, PhoneDataDto phone);
-
-	PhoneDataDto addPhoneData(Long userId, PhoneDataDto phone);
+	PhoneDataDto savePhoneData(Long userId, PhoneDataDto phone);
 }
