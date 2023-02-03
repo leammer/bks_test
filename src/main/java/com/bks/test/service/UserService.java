@@ -23,4 +23,6 @@ public interface UserService {
 	void deletePhoneData(Long userId, PhoneDataDto phone);
 
 	PhoneDataDto savePhoneData(Long userId, PhoneDataDto phone);
+	
+	org.springframework.security.core.userdetails.User findUserByUsername(String username);
 }

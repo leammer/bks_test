@@ -1,8 +1,12 @@
 package com.bks.test.service.impl;
 
+import java.util.Collections;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.bks.test.dto.EmailDataDto;
@@ -112,5 +116,15 @@ public class UserServiceImpl implements UserService {
 		entity.setName(user.getName());
 		entity.setDateOfBirth(user.getDateOfBirth());
 		return this.mappingUtils.mapToDto(this.userRepository.save(entity));
+	}
+	
+	@Override
+	public org.springframework.security.core.userdetails.User findUserByUsername(String username) {
+		//@formatter:off
+		return userRepository.findByName(username)
+				.map(user -> new org.springframework.security.core.userdetails.User(user.getName(),
+						user.getPassword(), Collections.EMPTY_LIST))
+				.orElseThrow(() -> new UsernameNotFoundException(username));
+		//@formatter:on
 	}
 }
