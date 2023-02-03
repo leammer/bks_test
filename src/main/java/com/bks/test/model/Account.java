@@ -1,6 +1,7 @@
 package com.bks.test.model;
 
 import java.math.BigDecimal;
+import java.math.MathContext;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -27,5 +28,7 @@ public class Account {
 	@OneToOne(mappedBy = "account")
 	private User user;
 
-	private BigDecimal balance;
+	private BigDecimal balance = new BigDecimal(0L);
+	
+	private BigDecimal maxBalance = new BigDecimal(0L);
 }

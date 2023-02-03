@@ -20,7 +20,8 @@ SET default_with_oids = false;
 
 CREATE TABLE IF NOT EXISTS public.account (
 	id bigserial NOT NULL,
-	balance numeric(19, 2) NULL,
+	balance numeric(19, 5) NULL,
+	max_balance numeric(19, 5) NULL,
 	CONSTRAINT account_pkey PRIMARY KEY (id)
 );
 
@@ -50,8 +51,8 @@ CREATE TABLE IF NOT EXISTS public.phone_data (
 	CONSTRAINT fk_phone_user FOREIGN KEY (user_id) REFERENCES public.users(id)
 );
 
-INSERT INTO account VALUES (DEFAULT,  1000);
-INSERT INTO account VALUES (DEFAULT,  2000);
+INSERT INTO account VALUES (DEFAULT,  100, 100*2.07);
+INSERT INTO account VALUES (DEFAULT,  2000, 2000*2.07);
 
 INSERT INTO users VALUES (DEFAULT,  null, 'user1', '12345678', 1);
 INSERT INTO users VALUES (DEFAULT,  null, 'user2', '87654321', 2);
